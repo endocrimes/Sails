@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		65BC1A491BC02BB700091F45 /* SocketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC1A481BC02BB700091F45 /* SocketTests.swift */; settings = {ASSET_TAGS = (); }; };
+		65BC1A4B1BC0416A00091F45 /* Assertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC1A4A1BC0416900091F45 /* Assertions.swift */; settings = {ASSET_TAGS = (); }; };
 		65F49F5F1BC006F000939241 /* Sails.h in Headers */ = {isa = PBXBuildFile; fileRef = 65F49F5E1BC006F000939241 /* Sails.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		65F49F661BC006F000939241 /* Sails.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F49F5B1BC006F000939241 /* Sails.framework */; settings = {ASSET_TAGS = (); }; };
 		65F49F761BC00E1D00939241 /* Sails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F49F751BC00E1D00939241 /* Sails.swift */; settings = {ASSET_TAGS = (); }; };
@@ -26,6 +27,7 @@
 
 /* Begin PBXFileReference section */
 		65BC1A481BC02BB700091F45 /* SocketTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketTests.swift; sourceTree = "<group>"; };
+		65BC1A4A1BC0416900091F45 /* Assertions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assertions.swift; sourceTree = "<group>"; };
 		65F49F5B1BC006F000939241 /* Sails.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Sails.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		65F49F5E1BC006F000939241 /* Sails.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Sails.h; sourceTree = "<group>"; };
 		65F49F601BC006F000939241 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 			children = (
 				65F49F6C1BC006F000939241 /* Info.plist */,
 				65BC1A481BC02BB700091F45 /* SocketTests.swift */,
+				65BC1A4A1BC0416900091F45 /* Assertions.swift */,
 			);
 			path = SailsTests;
 			sourceTree = "<group>";
@@ -209,6 +212,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65BC1A4B1BC0416A00091F45 /* Assertions.swift in Sources */,
 				65BC1A491BC02BB700091F45 /* SocketTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

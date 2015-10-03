@@ -11,6 +11,16 @@ import XCTest
 
 class SocketTests: XCTestCase {
     func test_can_setup_socket() {
-        
+        AssertNoThrow {
+            let socket = try Socket(port: 8080)
+            XCTAssertNotNil(socket)
+        }
+    }
+    
+    func test_setting_up_a_socket_on_a_restricted_port_fails() {
+        AssertThrows {
+            let socket = try Socket(port: 21)
+            XCTAssertNotNil(socket)
+        }
     }
 }
