@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		65BC1A491BC02BB700091F45 /* SocketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC1A481BC02BB700091F45 /* SocketTests.swift */; settings = {ASSET_TAGS = (); }; };
 		65F49F5F1BC006F000939241 /* Sails.h in Headers */ = {isa = PBXBuildFile; fileRef = 65F49F5E1BC006F000939241 /* Sails.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		65F49F661BC006F000939241 /* Sails.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F49F5B1BC006F000939241 /* Sails.framework */; settings = {ASSET_TAGS = (); }; };
-		65F49F6B1BC006F000939241 /* SailsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F49F6A1BC006F000939241 /* SailsTests.swift */; };
+		65F49F761BC00E1D00939241 /* Sails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F49F751BC00E1D00939241 /* Sails.swift */; settings = {ASSET_TAGS = (); }; };
+		65F49F781BC00E6E00939241 /* Socket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F49F771BC00E6E00939241 /* Socket.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -23,12 +25,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		65BC1A481BC02BB700091F45 /* SocketTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketTests.swift; sourceTree = "<group>"; };
 		65F49F5B1BC006F000939241 /* Sails.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Sails.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		65F49F5E1BC006F000939241 /* Sails.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Sails.h; sourceTree = "<group>"; };
 		65F49F601BC006F000939241 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65F49F651BC006F000939241 /* SailsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SailsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		65F49F6A1BC006F000939241 /* SailsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SailsTests.swift; sourceTree = "<group>"; };
 		65F49F6C1BC006F000939241 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		65F49F751BC00E1D00939241 /* Sails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sails.swift; sourceTree = "<group>"; };
+		65F49F771BC00E6E00939241 /* Socket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Socket.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +76,8 @@
 			isa = PBXGroup;
 			children = (
 				65F49F5E1BC006F000939241 /* Sails.h */,
+				65F49F751BC00E1D00939241 /* Sails.swift */,
+				65F49F771BC00E6E00939241 /* Socket.swift */,
 				65F49F601BC006F000939241 /* Info.plist */,
 			);
 			path = Sails;
@@ -80,8 +86,8 @@
 		65F49F691BC006F000939241 /* SailsTests */ = {
 			isa = PBXGroup;
 			children = (
-				65F49F6A1BC006F000939241 /* SailsTests.swift */,
 				65F49F6C1BC006F000939241 /* Info.plist */,
+				65BC1A481BC02BB700091F45 /* SocketTests.swift */,
 			);
 			path = SailsTests;
 			sourceTree = "<group>";
@@ -142,6 +148,7 @@
 		65F49F521BC006F000939241 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Daniel Tomlinson";
 				TargetAttributes = {
@@ -193,6 +200,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65F49F781BC00E6E00939241 /* Socket.swift in Sources */,
+				65F49F761BC00E1D00939241 /* Sails.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,7 +209,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65F49F6B1BC006F000939241 /* SailsTests.swift in Sources */,
+				65BC1A491BC02BB700091F45 /* SocketTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,6 +311,7 @@
 		65F49F701BC006F000939241 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -314,12 +324,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = co.rocketapps.Sails;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		65F49F711BC006F000939241 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -338,17 +350,20 @@
 		65F49F731BC006F000939241 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = SailsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = co.rocketapps.SailsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		65F49F741BC006F000939241 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = SailsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
@@ -376,6 +391,7 @@
 				65F49F711BC006F000939241 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		65F49F721BC006F000939241 /* Build configuration list for PBXNativeTarget "SailsTests" */ = {
 			isa = XCConfigurationList;
@@ -384,6 +400,7 @@
 				65F49F741BC006F000939241 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
