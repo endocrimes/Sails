@@ -21,16 +21,13 @@ public class Sails {
     func start() {
         dispatch_async(clientQueue) {
             while let client = try? self.socket.acceptClient() {
-                guard let clientAddress = client.peername() else { return }
-                print("New connection from: ", clientAddress)
+                print("New connection from: ", client)
                 
-                dispatch_async(self.clientQueue) {
-                    let parser = self.parserType.init()
-                    while let request = parser.parse(client), let handler = self.router.handlerForRequest(request) {
-                        let response = handler(request)
-                        Sails.respond(client, response: response)
-                        client.close()
-                    }
+                let parser = self.parserType.init()
+                while let request = parser.parse(client), let handler = self.router.handlerForRequest(request) {
+                    let response = handler(request)
+                    Sails.respond(client, response: response)
+                    client.close()
                 }
             }
             
