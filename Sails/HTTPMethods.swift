@@ -6,7 +6,7 @@
 //  Copyright © 2015 Daniel Tomlinson. All rights reserved.
 //
 
-public enum HTTPMethods {
+public enum HTTPMethod: String {
     case GET
     case POST
     case PUT

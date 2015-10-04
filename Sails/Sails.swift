@@ -25,9 +25,41 @@ public class Sails {
                 print("New connection from: ", clientAddress)
                 
                 dispatch_async(self.clientQueue) {
-                    _ = self.parserType.init()
+                    let parser = self.parserType.init()
+                    while let request = parser.parse(client), let handler = self.router.handlerForRequest(request) {
+                        let response = handler(request)
+                        Sails.respond(client, response: response)
+                        client.close()
+                    }
                 }
             }
+            
+            self.stop()
+        }
+    }
+    
+    func stop() {
+        socket.close()
+    }
+    
+    private static func respond(socket: Socket, response: HTTPResponse) {
+        do {
+            try socket.sendUTF8("HTTP/1.1 \(response.statusCode)\r\n")
+            if let body = response.body {
+                try socket.sendUTF8("Content-Length: \(body.length)\r\n")
+            } else {
+                try socket.sendUTF8("Content-Length: 0\r\n")
+            }
+            for (name, value) in response.headers {
+                try socket.sendUTF8("\(name): \(value)\r\n")
+            }
+            try socket.sendUTF8("\r\n")
+            if let body = response.body where response.method != .HEAD  {
+                try socket.sendData(body)
+            }
+        }
+        catch {
+            
         }
     }
 }
