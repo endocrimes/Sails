@@ -6,14 +6,25 @@
 //  Copyright © 2015 Daniel Tomlinson. All rights reserved.
 //
 
+
+import Foundation /* currently dependant on Foundation for String -> NSData */
+
+
 enum SocketErrors: ErrorType {
     case PosixSocketInitializationFailed
+    case PosixSocketWriteFailed
+    case StringDataConversionFailed
+    case PosixSocketAcceptFailed
 }
 
 private typealias POSIXSocket = CInt
 
 class Socket {
     private let posixSocket: POSIXSocket
+    
+    private init(posixSocket: POSIXSocket) {
+        self.posixSocket = posixSocket
+    }
     
     init(port: in_port_t = 8080) throws {
         posixSocket = socket(AF_INET, SOCK_STREAM, 0)
@@ -42,6 +53,45 @@ class Socket {
             releaseSocket(posixSocket)
             throw SocketErrors.PosixSocketInitializationFailed
         }
+    }
+}
+
+extension Socket {
+    func sendData(data: NSData) throws {
+        var totalSent = 0
+        let unsafePointer = UnsafePointer<UInt8>(data.bytes)
+        while totalSent < data.length {
+            let sent = write(posixSocket, unsafePointer + totalSent, Int(data.length - totalSent))
+            guard sent != 0 else {
+                throw SocketErrors.PosixSocketWriteFailed
+            }
+            
+            totalSent += sent
+        }
+    }
+    
+    func sendUTF8(string: String) throws {
+        guard let utf8Data = string.dataUsingEncoding(NSUTF8StringEncoding) else {
+            throw SocketErrors.StringDataConversionFailed
+        }
+        
+        try sendData(utf8Data)
+    }
+}
+
+extension Socket {
+    func acceptClient() throws -> Socket {
+        var addr = sockaddr(sa_len: 0, sa_family: 0, sa_data: (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0))
+        var len: socklen_t = 0
+        
+        let clientSocket = accept(posixSocket, &addr, &len)
+        guard clientSocket != -1 else {
+            throw SocketErrors.PosixSocketAcceptFailed
+        }
+        
+        nosigpipe(clientSocket)
+        
+        return Socket(posixSocket: clientSocket)
     }
 }
 
