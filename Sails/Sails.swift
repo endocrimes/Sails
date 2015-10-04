@@ -12,7 +12,7 @@ public class Sails {
     private let parserType: HTTPParser.Type
     private let clientQueue = dispatch_queue_create("co.rocketapps.Sails.clientQueue", nil)
     
-    init(socket: Socket = try! Socket(port: 8080), router: Router, parserType: HTTPParser.Type = ConcreteHTTPParser.self) {
+    public init(socket: Socket = try! Socket(port: 8080), router: Router, parserType: HTTPParser.Type = ConcreteHTTPParser.self) {
         self.socket = socket
         self.router = router
         self.parserType = parserType
