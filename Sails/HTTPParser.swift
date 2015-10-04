@@ -35,14 +35,56 @@ public struct ConcreteHTTPParser: HTTPParser {
     }
     
     private func extractUrlParams(path: String) -> [(String, String)] {
+        if let query = path.componentsSeparatedByString("?").last {
+            return query.componentsSeparatedByString("&").map { (param: String) -> (String, String) in
+                let tokens = param.componentsSeparatedByString("=")
+                if tokens.count >= 2 {
+                    let key = tokens[0].stringByRemovingPercentEncoding
+                    let value = tokens[1].stringByRemovingPercentEncoding
+                    if key != nil && value != nil { return (key!, value!) }
+                }
+                return ("","")
+            }
+        }
+        
         return []
     }
     
     private func extractHeaders(socket: Socket) -> [String : String] {
-        return [String : String]()
+        var headers = [String: String]()
+        while let headerLine = try? socket.readNextLine() {
+            if headerLine.isEmpty {
+                return headers
+            }
+            
+            let headerTokens = headerLine.componentsSeparatedByString(":")
+            if ( headerTokens.count >= 2 ) {
+                // RFC 2616 - "Hypertext Transfer Protocol -- HTTP/1.1", paragraph 4.2, "Message Headers":
+                // "Each header field consists of a name followed by a colon (":") and the field value. Field names are case-insensitive."
+                // We can keep lower case version.
+                let headerName = headerTokens[0].lowercaseString
+                let headerValue = headerTokens[1].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+                if !headerName.isEmpty && !headerValue.isEmpty {
+                    headers.updateValue(headerValue, forKey: headerName)
+                }
+            }
+        }
+        
+        return headers
     }
     
     private func extractBody(socket: Socket, length: Int) -> NSData? {
-        return nil
+        var body = ""
+        var counter = 0;
+        while counter < length {
+            let c = socket.nextInt8()
+            if c < 0 {
+                return nil
+            }
+            body.append(UnicodeScalar(c))
+            counter++;
+        }
+        
+        return body.dataUsingEncoding(NSUTF8StringEncoding)
     }
 }
