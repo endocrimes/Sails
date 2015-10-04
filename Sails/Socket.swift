@@ -13,6 +13,7 @@ import Foundation /* currently dependant on Foundation for String -> NSData */
 public enum SocketErrors: ErrorType {
     case PosixSocketInitializationFailed
     case PosixSocketWriteFailed
+    case PosixSocketReadFailed
     case StringDataConversionFailed
     case PosixSocketAcceptFailed
 }
@@ -114,6 +115,30 @@ public extension Socket {
 public extension Socket {
     func close() {
         releaseSocket(posixSocket)
+    }
+}
+
+public extension Socket {
+    func nextInt8() -> Int {
+        var buffer = [UInt8](count: 1, repeatedValue: 0);
+        let next = recv(posixSocket, &buffer, Int(buffer.count), 0)
+        if next <= 0 { return next }
+        
+        return Int(buffer[0])
+    }
+    
+    func readNextLine() throws -> String {
+        var characters: String = ""
+        var n = 0
+        repeat {
+            n = nextInt8()
+            if ( n > 13 /* CR */ ) { characters.append(Character(UnicodeScalar(n))) }
+        } while ( n > 0 && n != 10 /* NL */)
+        guard n != -1 && !characters.isEmpty else {
+            throw SocketErrors.PosixSocketReadFailed
+        }
+        
+        return characters
     }
 }
 
