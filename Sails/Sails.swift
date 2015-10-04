@@ -18,7 +18,7 @@ public class Sails {
         self.parserType = parserType
     }
     
-    func start() {
+    public func start() {
         dispatch_async(clientQueue) {
             while let client = try? self.socket.acceptClient() {
                 print("New connection from: ", client)
@@ -35,7 +35,7 @@ public class Sails {
         }
     }
     
-    func stop() {
+    public func stop() {
         socket.close()
     }
     
