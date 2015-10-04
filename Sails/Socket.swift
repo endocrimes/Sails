@@ -10,23 +10,23 @@
 import Foundation /* currently dependant on Foundation for String -> NSData */
 
 
-enum SocketErrors: ErrorType {
+public enum SocketErrors: ErrorType {
     case PosixSocketInitializationFailed
     case PosixSocketWriteFailed
     case StringDataConversionFailed
     case PosixSocketAcceptFailed
 }
 
-private typealias POSIXSocket = CInt
+public typealias POSIXSocket = CInt
 
-class Socket {
+public class Socket {
     private let posixSocket: POSIXSocket
     
-    private init(posixSocket: POSIXSocket) {
+    public init(posixSocket: POSIXSocket) {
         self.posixSocket = posixSocket
     }
     
-    init(port: in_port_t = 8080) throws {
+    public init(port: in_port_t = 8080) throws {
         posixSocket = socket(AF_INET, SOCK_STREAM, 0)
         guard posixSocket != -1 else {
             releaseSocket(posixSocket)
@@ -56,7 +56,7 @@ class Socket {
     }
 }
 
-extension Socket {
+public extension Socket {
     func sendData(data: NSData) throws {
         var totalSent = 0
         let unsafePointer = UnsafePointer<UInt8>(data.bytes)
@@ -79,7 +79,7 @@ extension Socket {
     }
 }
 
-extension Socket {
+public extension Socket {
     func peername() -> String? {
         var addr = sockaddr(), len: socklen_t = socklen_t(sizeof(sockaddr))
         guard getpeername(posixSocket, &addr, &len) != 0 else {
@@ -95,7 +95,7 @@ extension Socket {
     }
 }
 
-extension Socket {
+public extension Socket {
     func acceptClient() throws -> Socket {
         var addr = sockaddr(sa_len: 0, sa_family: 0, sa_data: (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0))
         var len: socklen_t = 0
@@ -111,7 +111,7 @@ extension Socket {
     }
 }
 
-extension Socket {
+public extension Socket {
     func close() {
         releaseSocket(posixSocket)
     }
