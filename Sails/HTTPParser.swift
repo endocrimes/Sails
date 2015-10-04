@@ -19,7 +19,7 @@ public struct ConcreteHTTPParser: HTTPParser {
     public func parse(socket: Socket) -> HTTPRequest? {
         guard let statusLine = try? socket.readNextLine() else { return nil }
         let statusTokens = statusLine.componentsSeparatedByString(" ")
-        print("ConcreteHTTPParser: ", statusTokens)
+        
         guard statusTokens.count == 3 else { return nil }
         
         guard let method = HTTPMethod(rawValue: statusTokens[0]) else { return nil }
