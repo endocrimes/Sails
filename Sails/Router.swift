@@ -7,24 +7,27 @@
 //
 
 public typealias Handler = HTTPRequest -> HTTPResponse
+public typealias Matcher = HTTPRequest -> Bool
+
+public typealias Route = (Matcher, Handler)
 
 public protocol Router {
-    var matchers: [(NSRegularExpression, Handler)] { get }
+    var matchers: [Route] { get }
     func handlerForRequest(request: HTTPRequest) -> Handler?
 }
 
 public struct ConcreteRouter: Router {
-    public var matchers: [(NSRegularExpression, Handler)] = []
+    public var matchers: [Route] = []
     
     public func handlerForRequest(request: HTTPRequest) -> Handler? {
-        for (matcher, handler) in matchers {
-            guard matcher.matchesInString(request.url, options: NSMatchingOptions(rawValue: 0), range: NSMakeRange(0, request.url.characters.count)).count > 0 else {
-                return nil
-            }
-            
+        for (matcher, handler) in matchers where matcher(request) == true {
             return handler
         }
         
         return nil
+    }
+    
+    public init(matchers: [Route]) {
+        self.matchers = matchers
     }
 }
