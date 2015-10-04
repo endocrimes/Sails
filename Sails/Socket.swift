@@ -80,6 +80,22 @@ extension Socket {
 }
 
 extension Socket {
+    func peername() -> String? {
+        var addr = sockaddr(), len: socklen_t = socklen_t(sizeof(sockaddr))
+        guard getpeername(posixSocket, &addr, &len) != 0 else {
+            return nil
+        }
+        
+        var hostBuffer = [CChar](count: Int(NI_MAXHOST), repeatedValue: 0)
+        guard getnameinfo(&addr, len, &hostBuffer, socklen_t(hostBuffer.count), nil, 0, NI_NUMERICHOST) != 0 else {
+            return nil
+        }
+        
+        return String.fromCString(hostBuffer)
+    }
+}
+
+extension Socket {
     func acceptClient() throws -> Socket {
         var addr = sockaddr(sa_len: 0, sa_family: 0, sa_data: (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0))
         var len: socklen_t = 0
@@ -92,6 +108,12 @@ extension Socket {
         nosigpipe(clientSocket)
         
         return Socket(posixSocket: clientSocket)
+    }
+}
+
+extension Socket {
+    func close() {
+        releaseSocket(posixSocket)
     }
 }
 
