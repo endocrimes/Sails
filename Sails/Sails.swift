@@ -2,7 +2,7 @@
 //  Sails.swift
 //  Sails
 //
-//  Created by  Danielle Lancashireon 03/10/2015.
+//  Created by Danielle Lancashire on 03/10/2015.
 //  Copyright © 2015 Danielle Lancashire. All rights reserved.
 //
 
